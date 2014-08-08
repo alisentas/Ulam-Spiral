@@ -1,4 +1,4 @@
-function ulam(container, width, height, cubeWidth, count){
+function ulam(container, width, height, cubeWidth, count, color){
 	container.innerHTML = "";//clear container
 	var canvas = document.createElement("canvas"); //create canvas
 	var ctx = canvas.getContext("2d");
@@ -9,11 +9,11 @@ function ulam(container, width, height, cubeWidth, count){
 	var turnRow = 0; //all turns should pass twice, for example right: 2, down: 2 left: 3, up: 3, right: 4...
 	var m;//for leastFactor
 	ctx.beginPath();
-	var cubeWidth = parseInt(document.getElementById("cubeWidth").value, 10);//width of all prime cubes
-	var count = parseInt(document.getElementById("count").value,10); //count of numbers should program check, not prime count
-	canvas.width = parseInt(document.getElementById("width").value,10);
-	canvas.height = parseInt(document.getElementById("height").value,10);
-	ctx.fillStyle = "black";
+	var cubeWidth = cubeWidth;
+	var count = count;
+	canvas.width = width;
+	canvas.height = height;
+	ctx.fillStyle = color;
 
 	//ctx.rect(canvas.width / 2, canvas.height / 2, cubeWidth, cubeWidth);
 	ctx.rect(canvas.width / 2 + cubeWidth,canvas.height / 2, cubeWidth, cubeWidth); //fill number 2

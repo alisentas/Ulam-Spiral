@@ -1,33 +1,35 @@
-function ulam(container, width, height, cubeWidth, count, color){
+
+/**
+ * Ulam Spiral Generator
+ * by Ali Şentaş
+ * Last Update: 09.08.2014
+ */
+function ulam(opts){
+	/**
+		opts are:
+		[Name]     [Type]         [Description]
+		container: DOM elemment   container element
+		width:     int            canvas width
+		height:    int            canvas.height
+		cubeWidth: int            prime number cube width
+		color:     string         fill color
+		startNum:  int            number to start
+		count:     int            number amount to check
+	*/
+	var startTime = new Date().getTime(); //timer starts
+	var container = opts.container;
 	container.innerHTML = "";//clear container
 	var canvas = document.createElement("canvas"); //create canvas
 	var ctx = canvas.getContext("2d");
-	
-	var	dir = "right"; //program direction
-	var turn = 0; //turns passed in that direction
-	var turns = 2; //total turns shouldve pass
-	var turnRow = 0; //all turns should pass twice, for example right: 2, down: 2 left: 3, up: 3, right: 4...
-	var m;//for leastFactor
-	ctx.beginPath();
-	var cubeWidth = cubeWidth;
-	var count = count;
-	canvas.width = width;
-	canvas.height = height;
-	ctx.fillStyle = color;
-
-	//ctx.rect(canvas.width / 2, canvas.height / 2, cubeWidth, cubeWidth);
-	ctx.rect(canvas.width / 2 + cubeWidth,canvas.height / 2, cubeWidth, cubeWidth); //fill number 2
-	ctx.rect(canvas.width / 2 + cubeWidth,canvas.height / 2 - cubeWidth,cubeWidth,cubeWidth); //fill number 3
-	curLoc = [canvas.width / 2 + cubeWidth,canvas.height / 2 - cubeWidth];//start with number 4
-	
 	// I've used a fast prime function found from http://www.javascripter.net/faq/numberisprime.htm
-	isPrime = function(n) {
+
+	var isPrime = function(n) {
 		if (n%1 || n<2) return false;
 		if (n==leastFactor(n)) return true;
 		return false;
 	}
-
-	leastFactor = function(n){
+	var m;
+	var leastFactor = function(n){
 		if (isNaN(n) || !isFinite(n)) return NaN;  
 		if (n==0) return 0;
 		if (n%1 || n*n<2) return 1;
@@ -47,8 +49,29 @@ function ulam(container, width, height, cubeWidth, count, color){
 		}
 		return n;
 	}
-	for(i = 4; i <= count; i++){
+	var	dir = "start"; //program direction
+	var turn = 0; //turns passed in that direction
+	var turns = 1; //total turns shouldve pass
+	var turnRow = 0; //all turns should pass twice, for example right: 2, down: 2 left: 3, up: 3, right: 4...
+	ctx.beginPath();
+	var cubeWidth = opts.cubeWidth;
+	var start = opts.startNum;
+	var count = opts.count;
+	canvas.width = opts.width;
+	canvas.height = opts.height;
+	ctx.fillStyle = opts.color;
+	var curLoc; //current location, array containing [x, y] values
+	
+	for(i = start; i <= start + count; i++){
 		switch(dir){
+			case "start":
+				curLoc = [canvas.width / 2, canvas.height / 2]
+				if(isPrime(i)){
+					//if i is prime, fill!
+					ctx.rect(curLoc[0],curLoc[1],cubeWidth,cubeWidth);
+				}
+				dir = "left";
+			break;
 			case "right":
 				//if we are going into right, we should increment turn
 				turn++;
@@ -121,4 +144,9 @@ function ulam(container, width, height, cubeWidth, count, color){
 	}
 	ctx.fill(); //fill up the board ! yay
 	container.appendChild(canvas); //append canvas to container
+	//Time calculation
+	var endTime = new Date().getTime() - startTime;
+	var time = document.createElement("p");
+	time.innerHTML = "Ulam Spiral generated in " + endTime + " ms. with <a href=\"http://github.com/alisentas\">Ali Şentaş</a>'s generator";
+	container.appendChild(time);
 }

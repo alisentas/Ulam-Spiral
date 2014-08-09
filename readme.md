@@ -2,7 +2,7 @@ Ulam Spiral
 ====
 
 A Javascript based Ulam Spiral generator. I created it with pure javascript. 
-A demo can be found on this **[Github Page](htttp://alisentas.github.io/Ulam-Spiral)**
+A demo can be found on this: [Github Page](htttp://alisentas.github.io/Ulam-Spiral)
 
 Usage
 ====
